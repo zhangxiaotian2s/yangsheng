@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection">
+		<title>会员预定</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+	</head>
+
+	<body class="bk_gray2">
+		<div class="wrap">
+			<header class="header ">
+				<div class="headercontent">
+					<a href="#" class="header_left">
+						<span class="iconfont icon-back01"></span>
+					</a>
+					<h1>会员预定</h1>
+				</div>
+			</header>
+			<div class="clearfix reservemes">
+				<ul class="reserveul">
+					<li>时间:
+						<div class="right_element" id="timeshow">
+
+						</div>
+						<input type="datetime-local" class="right_element right_date" id="datatime" />
+					</li>
+					<li>联系人:
+						<input type="text" class="right_element right_text " />
+					</li>
+					<li>性别:
+						<select class="right_element right_text">
+							<option>男</option>
+							<option>女</option>
+						</select>
+					</li>
+					<li>联系电话:
+						<input type="tel" class="right_element right_text" />
+					</li>
+				</ul>
+			</div>
+			<div class="selecttong clearfix">
+				选择桶
+				<ul id="selecttong">
+					<li data-selec-tong='1'>1号</li>
+					<li data-selec-tong='2' class="cantap">2号</li>
+					<li data-selec-tong='3'>3号</li>
+					<li data-selec-tong='4' class="cantap current">4号</li>
+					<li data-selec-tong='5'>5号</li>
+					<li data-selec-tong='6' class="cantap">6号</li>
+					<li data-selec-tong='7'>7号</li>
+					<li data-selec-tong='8' class="cantap">8号</li>
+					<li data-selec-tong='9'>9号</li>
+					<li data-selec-tong='10'>10号</li>
+					<li data-selec-tong='11' class="cantap">11号</li>
+					<li data-selec-tong='12'>12号</li>
+				</ul>
+				<input hidden="hidden" value="" id="selectinput" />
+			</div>
+			<div class="blank2"></div>
+			<button class="submitbtn">预 定</button>
+		</div>
+		<script type="text/javascript" src="js/zepto.min.js"></script>
+		<script>
+			var datatime = $('#datatime')
+			var timeshow = $('#timeshow')
+			datatime.on('change', function() {
+				timeshow.text($(this).val().substring(0, 16).replace(/T/, ' '))
+			})
+			var selectinput = $('#selectinput')
+			$('#selecttong li.cantap').on('tap', function() {
+				$(this).addClass('current').siblings('.cantap').removeClass('current')
+				selectinput.val($(this).attr('data-selec-tong'))
+			})
+		</script>
+	</body>
+
+</html>

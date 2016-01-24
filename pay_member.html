@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection">
+		<title>会员充值</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+	</head>
+
+	<body class="bk_gray2">
+		<div class="wrap">
+			<header class="header ">
+				<div class="headercontent">
+					<a href="#" class="header_left">
+						<span class="iconfont icon-back01"></span>
+					</a>
+					<h1>会员充值</h1>
+				</div>
+			</header>
+			<div class="top_yue">
+				当前余额：<span>52000元</span>
+			</div>
+			<div class="blank1"></div>
+			<div class="money_chose clearfix">
+				<ul class="moneyul">
+					<li class="current" data-number="100">100元</li>
+					<li data-number="300">300元</li>
+					<li data-number="500">500元</li>
+					<li data-number="1000">1000元</li>
+					<li data-number="5000">5000元</li>
+					<li data-number="10000">10000元</li>
+				</ul>
+				<div class="blank0"></div>
+				<div class="input_box ">
+					<input type="number" value="" id="outhernumber" placeholder="其他金额" />
+				</div>
+				<div class="blank1"></div>
+				<ul class="paywayul">
+					<li class="current">
+						<label>
+							<input type="radio" name="payway" hidden="hidden" value="weixin" checked="checked" class="paywayradio" />
+							<span class="iconfont icon-xuanzhong selecticon"></span>
+							<span class="iconfont icon-weixin paywayicon "></span>
+						</label>
+					</li>
+					<li>
+						<label>
+							<input type="radio" name="payway" hidden="hidden" value="zhifubao" class="paywayradio" />
+							<span class="iconfont icon-weixuanzhong selecticon"></span>
+							<span class="iconfont icon-zhifubao paywayicon"></span>
+						</label>
+					</li>
+				</ul>
+				<input hidden="hidden" value="300" id="paynumber" />
+			</div>
+			<div class="blank2"></div>
+			<button class="submitbtn">充值</button>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/zepto.min.js"></script>
+	<script>
+		$('.paywayradio').on('change', function() {
+			$(this).parents('li').addClass('current').siblings('li').removeClass('current').find('.selecticon').addClass('icon-weixuanzhong').removeClass('icon-xuanzhong')
+			$(this).siblings('.selecticon').addClass('icon-xuanzhong').removeClass('icon-weixuanzhong')
+		})
+		var paynumber = $('#paynumber')
+		var paymoneyli = $('.moneyul li')
+		var selecti = 0
+		paymoneyli.on('tap', function() {
+			$(this).addClass('current').siblings().removeClass('current')
+			paynumber.val($(this).attr('data-number'))
+			selecti = $(this).index()
+			outhernumber.val('')
+		})
+		var outhernumber = $('#outhernumber')
+		outhernumber.on({
+			'focus': function() {
+				paymoneyli.removeClass('current')
+			},
+			'blur': function() {
+				if ($(this).val() == '') {
+					paymoneyli.eq(selecti).addClass('current')
+				} else {
+					paynumber.val($(this).val())
+				}
+			}
+		})
+	</script>
+
+</html>

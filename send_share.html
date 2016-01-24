@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection">
+		<title>分享</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+	</head>
+
+	<body class="bk_gray2">
+		<div class="wrap">
+			<div class="send_head clearfix">
+				<a href="" class="send_qx">确定</a>
+				<a href="" class="send_qd">取消</a>
+			</div>
+			<div class=" addimglist clearfix">
+				<textarea class="sharetextarea" id="share_text">分享你的体验，或咨询问题...</textarea>
+				<div class="col-xs-3"><img src="images/会员充值.png" alt="" />
+					<span class="iconfont icon-shanchu01"></span>
+				</div>
+				<div class="col-xs-3"><img src="images/分享资讯页.png" alt="" />
+					<span class="iconfont icon-shanchu01"></span>
+				</div>
+				<div class="col-xs-3"><img src="images/分享资讯页.png" alt="" />
+					<span class="iconfont icon-shanchu01"></span>
+				</div>
+				<div class="col-xs-3"><img src="images/分享资讯页.png" alt="" />
+					<span class="iconfont icon-shanchu01"></span>
+				</div>
+				<div class="col-xs-3"><img src="images/分享资讯页.png" alt="" />
+					<span class="iconfont icon-shanchu01"></span>
+				</div>
+				<div class="col-xs-3"><img src="images/addimgbtn.jpg" alt="" /></div>
+			</div>
+			<div class="blank2"></div>
+			<div class="selectshow clearfix">
+				<ul>
+					<li class="col-xs-4 current">
+						<label>
+							<span class="iconfont icon-xuanzhong"></span> 所有人可见
+							<input type="radio" hidden="hidden" name="xxxx" checked="checked" id="" value="" class="showradio" />
+						</label>
+					</li>
+					<li class="col-xs-4">
+						<label><span class="iconfont icon-weixuanzhong"></span> 家人可见
+							<input type="radio" hidden="hidden"  name="xxxx" id="" value="" class="showradio" />
+						</label>
+					</li>
+					<li class="col-xs-4">
+						<label><span class="iconfont icon-weixuanzhong"></span> 自己可见
+							<input type="radio" hidden="hidden"  name="xxxx" id="" value="" class="showradio" />
+						</label>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/zepto.min.js"></script>
+		<script>
+			$('#share_text').on({
+				'focus': function() {
+					if ($(this).text() == "分享你的体验，或咨询问题...") {
+						$(this).text("")
+					}
+				},
+				'blur': function() {
+					if ($(this).text() == "") {
+						$(this).text("分享你的体验，或咨询问题...")
+					}
+				}
+			})
+			$('.showradio').on('change', function() {
+				$(this).parents('li').siblings('li').find('span').addClass('icon-weixuanzhong').removeClass('icon-xuanzhong')
+				$(this).siblings('span').addClass('icon-xuanzhong').removeClass('icon-weixuanzhong')
+			})
+		</script>
+
+	</body>
+
+</html>
