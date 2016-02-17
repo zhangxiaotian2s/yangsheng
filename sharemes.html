@@ -40,8 +40,48 @@
 					<div class="blank0"></div>
 					<div class="clearfix time_xinxi">
 						5分钟前
-						<span class="iconfont icon-xiaoxi02"></span>
+						<span class="iconfont icon-xiaoxi02 sharepl"></span>
 					</div>
+					<div class="shareaddpl  hidden">
+						<textarea rows="3" ></textarea>
+                           <button class="sharesendbtn"  data-shareid="0">确定</button>
+					</div>
+					
+					<div class="sharepllisttop">
+					</div>
+						<div class="sharepllist">
+							<p><span>刘了解：</span>泡完澡太舒服了泡完澡太舒服了泡完澡太舒服了泡完澡太舒服了</p>
+							<p><span>刘解：</span>泡完澡太舒服了太舒服了泡完澡太舒服了泡完澡太舒服了</p>
+					</div>
+					
+				</div>
+
+			</div>
+			<div class="shareone">
+				<div class="shareone_left">
+					<div class="shareuserhead">
+						<img src="images/tximg.png" class="img-responsive">
+					</div>
+				</div>
+				<div class="shareone_right">
+					<h2>安小琪</h2>
+					<p class="sharetextmes">泡完澡太舒服了，感觉全身轻松了许多~工作压力比较大的话，去泡一下真的很好。</p>
+					<div class="blank1"></div>
+					<ul class="shareimglist">
+						<li><img src="images/会员中心.png" class="img-responsive"></li>
+						<li><img src="images/会员中心.png"  class="img-responsive"></li>
+						<li><img src="images/会员中心.png"  class="img-responsive"></li>
+					</ul>
+					<div class="blank0"></div>
+					<div class="clearfix time_xinxi">
+						5分钟前
+						<span class="iconfont icon-xiaoxi02 sharepl"></span>
+					</div>
+					<div class="shareaddpl  hidden">
+						<textarea rows="3" ></textarea>
+						  <button class="sharesendbtn"  data-shareid="1">确定</button>
+					</div>
+					
 					<div class="sharepllisttop">
 					</div>
 						<div class="sharepllist">
@@ -53,7 +93,25 @@
 
 			</div>
 		</div>
-
+		<script type="text/javascript" src="js/zepto.min.js" ></script>
+		<script>
+			$(".sharepl").on('tap',function(){
+				$(this).parent().next('.shareaddpl').toggle()
+			    $(this).parent().next('.shareaddpl').children('textarea')[0].onfocus()
+			})
+			$('.sharesendbtn').on('tap',function(){
+				var self=$(this)
+				 var _content=self.prev('textarea').val()
+				 var  _shareid=self.attr('data-shareid')
+				 //写AJAX提交  用attr 来获取信息标识
+				 
+				 
+				 //隐藏
+				self.parent().hide()
+				 
+			})
+			
+		</script>
 	</body>
 
 </html>
