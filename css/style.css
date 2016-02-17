@@ -286,3 +286,16 @@ visibility: hidden;
 .shareaddpl textarea{ width: 89%; border: #C5AFA5 solid 1px; padding: 0.5rem 5%; font-size: 1rem; border-radius: 0; }
 .sharesendbtn{ width: 100%; height: 2rem;border: none; background: #C5AFA5; color: #FFFFFF;}
 
+.jilubox{ background: #FFFFFF; width: 100%; }
+.jilutime,.waterrecord,.watertime{ width: 90%; margin:auto ; border-bottom: #efeae8  solid 1px; height: 4rem; line-height:  4rem; color: #564237; font-size: 1.2rem; position: relative;}
+
+
+.jilutime .right_element,.waterrecord .right_element,.watertime .right_element{ height: 4rem; line-height: 4rem; color: #906953;}
+
+.waterrecord{ position: relative;border-bottom: none;}
+.waterlist{ height: 4rem;width: 100%; position: relative;}
+.waterlist .line{ width: 86%; margin: auto;  height: 7px; border-bottom: #cfbdb4 solid 1px; }
+.waterlist ul{ position: absolute; top: 0rem; width: 100%; margin: auto;}
+.waterlist ul li{ float: left; width: 11.1111111%; text-align: center;color: #906953;font-size: 0.9rem;}
+.waterlist ul li span{ display: block; overflow: hidden; margin: auto;   width: 14px; height: 14px; background: #f2ece9; border:#cfbdb4 solid 1px; border-radius: 8px; margin-bottom: 0.3rem; } 
+.watertime{ border-bottom: none; border-top:#efeae8 solid 1px ;}
