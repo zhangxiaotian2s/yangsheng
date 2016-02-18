@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection">
+		<title>会员中心</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<style>
+			.selectul{ width: 100%;}
+			
+			.selectul li {float: left; margin: 0.5rem;}
+			.calendarbox{ width: 100%;overflow: hidden;}
+			.calendarbox ul {  width: 100%;}
+			.calendarbox ul li{width:  14.285%; float: left; font-size: 0.6rem; text-align: center;}
+
+		</style>
+	</head>
+
+	<body>
+		<div class="wrap">
+		<ul id="year" class="selectul">
+			<li data-year = "2008"  >2008</li>
+			<li data-year = "2009"  >2009</li>
+			<li data-year = "2010" >2010</li>
+			<li data-year = "2011" >2011</li>
+			<li data-year = "2012" >2012</li>
+			<li data-year = "2013" >2013</li>
+			<li data-year = "2014" >2014</li>
+			<li data-year = "2015" >2015</li>
+			<li data-year = "2016" >2016</li>
+			<li data-year = "2017" >2017</li>
+		</ul>
+		<div  class="blank1">
+			
+		</div>
+		<ul id="month" class="selectul">
+			<li data-month = "1">01</li>
+			<li data-month = "2">02</li>
+			<li data-month = "3">03</li>
+			<li data-month = "4">04</li>
+			<li data-month = "1">05</li>
+			<li data-month = "1">06</li>
+			<li data-month = "1">07</li>
+			<li data-month = "1">08</li>
+			<li data-month = "1">09</li>
+			<li data-month = "1">10</li>
+			<li data-month = "1">11</li>
+			<li data-month = "1">12</li>
+		</ul>
+		<div  class="blank1">
+		</div>
+		<div class="calendarbox">
+			<ul class="week">
+				<li>星期日</li>
+				<li>星期一</li>
+				<li>星期二</li>
+				<li>星期三</li>
+				<li>星期四</li>
+				<li>星期五</li>
+				<li>星期六</li>
+			</ul>
+			<ul id="daysul"></ul>
+		</div>
+	</div>
+		
+	</body>
+	<script type="text/javascript" src="js/zepto.min.js" ></script>
+	<script>
+	  function calendar(){
+	  	this.yearli=$('#year li');
+	  	this.monthli=$('#year li');
+	  	this.daysul=$('#daysul')
+	  }
+	  var C_ptype=  calendar.prototype
+	  C_ptype.tapSelect=function(){
+	  	var self=this;
+	  	//选择年份的时候的事件
+	    self.yearli.on('tap',function(){
+	    	$(this).addClass('current').siblings('li').removeClass('current')
+	    	var _year=$(this).attr('data-year')
+	    })
+	    //选择月份的时候的时间
+	    self.monthli.on('tap',function(){
+	    	
+	    })
+	  }
+	  C_ptype.getFirstDayWeek=function(){
+	  	
+	  }
+	  
+	  
+	  
+		
+	</script>
+	
+</html>
