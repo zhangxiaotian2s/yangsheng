@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<title>添加记录</title>
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body class="bk_gray2">
+		<div class="wrap">
+			<div class="calendarhead">
+				<div class="yearmonthbox" id="yearbtn">
+					<em></em> &nbsp;<span class="iconfont icon-weixiala"></span>
+				</div>
+				<div class="yearmonthbox" id="monthbtn">
+					<em></em> &nbsp;<span class="iconfont icon-weixiala"></span>
+				</div>
+				<ul id="year" class="selectul hidden">
+					<li data-year="2014">2014</li>
+					<li data-year="2015">2015</li>
+					<li data-year="2016">2016</li>
+					<li data-year="2017">2017</li>
+					<li data-year="2018">2018</li>
+				</ul>
+				<ul id="month" class="selectul hidden">
+					<li data-month="01">01</li>
+					<li data-month="02">02</li>
+					<li data-month="03">03</li>
+					<li data-month="04">04</li>
+					<li data-month="05">05</li>
+					<li data-month="06">06</li>
+					<li data-month="07">07</li>
+					<li data-month="08">08</li>
+					<li data-month="09">09</li>
+					<li data-month="10">10</li>
+					<li data-month="11">11</li>
+					<li data-month="12">12</li>
+				</ul>
+			</div>
+			<div class="calendarbox">
+				<ul class="week">
+					<li>日</li>
+					<li>一</li>
+					<li>二</li>
+					<li>三</li>
+					<li>四</li>
+					<li>五</li>
+					<li>六</li>
+				</ul>
+				<ul id="daysul"></ul>
+			</div>
+			<div class="blank1"></div>
+			<div class="jilumes">
+				<ul>
+					<li>时间：<span>2016年02月11日 17点57分</span></li>
+					<li>时长：<span>20分钟</span></li>
+					<li>温度：<span>37℃</span></li>
+				</ul>
+			</div>
+			<div class="blank2"></div>
+			<button class="submitbtn">反 应</button>
+			<div class="blank2"></div>
+		</div>
+		<script type="text/javascript" src="js/zepto.min.js"></script>
+		<script type="text/javascript">
+			function calendar() {
+				this.year = $('#year');
+				this.month = $('#month');
+				this.yearli = this.year.children('li');
+				this.monthli = this.month.children('li');
+				this.daysul = $('#daysul');
+				this.yearbtn = $('#yearbtn');
+				this.monthbtn = $("#monthbtn");
+			}
+			var C_ptype = calendar.prototype;
+			C_ptype.init = function(arrData) {
+				var self = this
+				self.initTap()
+				self.tapSelect()
+				self.iniNowCalendar()
+				self.arrData = arrData
+			}
+			C_ptype.initTap = function() {
+					var self = this
+					self.yearbtn.on('tap', function() {
+						self.year.toggle();
+						$(this).children('span').toggleClass('icon-yixiala').toggleClass('icon-weixiala');
+						self.month.hide();
+						self.monthbtn.children('span').addClass('icon-weixiala').removeClass('icon-yixiala');
+					})
+					self.monthbtn.on('tap', function() {
+						self.month.toggle();
+						$(this).children('span').toggleClass('icon-yixiala').toggleClass('icon-weixiala');
+						self.year.hide();
+						self.yearbtn.children('span').addClass('icon-weixiala').removeClass('icon-yixiala');
+					})
+				}
+				//根据当前的时间设置显示的月份日历
+			C_ptype.iniNowCalendar = function() {
+					var self = this;
+					var _nowtime = new Date();
+					var _year = _nowtime.getFullYear();
+					var _month = _nowtime.getMonth();
+					for (i = 0; i < self.yearli.length; i++) {
+						if (self.yearli.eq(i).attr('data-year') == _year) {
+							self.yearli.eq(i).addClass('current')
+							self.yearbtn.children('em').text(_year);
+						}
+					}
+					for (i = 0; i < self.monthli.length; i++) {
+						if (self.monthli.eq(i).index() == _month) {
+							self.monthli.eq(i).addClass('current')
+							self.monthbtn.children('em').text(self.monthli.eq(i).attr('data-month'));
+						}
+					}
+					self.getDayInfo(_year, _month + 1)
+				}
+				//选择年份或者月份触发的事件
+			C_ptype.tapSelect = function() {
+					var self = this;
+					//选择年份的时候的事件
+					self.yearli.on('tap', function() {
+							$(this).addClass('current').siblings('li').removeClass('current')
+							self.year.toggle()
+							self.yearbtn.children('span').toggleClass('icon-yixiala').toggleClass('icon-weixiala');
+							var _year = $(this).attr('data-year')
+							var _month = self.month.children('.current').attr('data-month')
+							self.yearbtn.children('em').text(_year)
+							self.getDayInfo(_year, _month)
+						})
+						//选择月份的时候的时间
+					self.monthli.on('tap', function() {
+						$(this).addClass('current').siblings('li').removeClass('current')
+						self.month.toggle()
+						self.monthbtn.children('span').toggleClass('icon-yixiala').toggleClass('icon-weixiala');
+						var _month = $(this).attr('data-month')
+						var _year = self.year.children('.current').attr('data-year')
+						self.monthbtn.children('em').text(_month)
+						self.getDayInfo(_year, _month)
+					})
+				}
+				//根据 time 时间格式： 拿到需要的时间信息。1首日的星期几。2当月的天数。3前一个月的天数。
+			C_ptype.getDayInfo = function(year, month) {
+				console.log(month)
+				var _firstweek = new Date(year + '-' + month + '-' + '01').getDay(); //星期几 0代表星期日
+				var _monthdays = new Date(year, month, 0).getDate() //得到当前月份的天数
+				
+				this.addMonthDays(_firstweek, _monthdays,year,month)
+			}
+			C_ptype.addMonthDays = function(startweek, num,year,month) {
+				var _html = ""
+					//为上个月份留空
+				for (i = 0; i < startweek; i++) {
+					_html += '<li>&nbsp;</li>'
+				}
+				for (i = 1; i <= num; i++) {
+					var _day=i
+					if(i<10){
+					_day='0'+i
+					}
+					var _time=year+'-'+month+'-'+_day
+					console.log(_time)
+//					for (j = 0; j < self.arrData.length; j++) {
+//						if (self.arrData[j].keytime==){
+//							
+//						}
+//					}
+					_html += '<li><span>' + i + '</span></li>'
+				}
+				this.daysul.html(_html)
+			}
+			var arrMes = [{
+				keytime:'2016-02-01',
+				Time: '2016年02月01日 17点57分',
+				Tlength: '20分钟',
+				Waterheat: '37℃'
+			}, {
+				keytime:'2016-02-08',
+				Time: '2016年02月08日 17点57分',
+				Tlength: '20分钟',
+				Waterheat: '37℃'
+			}, {
+				keytime:'2016-02-11',
+				Time: '2016年02月11日 17点57分',
+				Tlength: '20分钟',
+				Waterheat: '37℃'
+			}, {
+				keytime:'2016-02-14',
+				Time: '2016年02月14日 17点57分',
+				Tlength: '20分钟',
+				Waterheat: '37℃'
+			}, {
+				keytime:'2016-02-19',
+				Time: '2016年02月19日 17点57分',
+				Tlength: '20分钟',
+				Waterheat: '37℃'
+			}]
+			var calendar = new calendar()
+			calendar.init()
+		</script>
+	</body>
+
+</html>

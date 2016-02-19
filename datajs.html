@@ -12,90 +12,135 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<style>
 			.selectul{ width: 100%;}
-			
+		
 			.selectul li {float: left; margin: 0.5rem;}
+			.selectul li.current{ color: #D85810;} 
 			.calendarbox{ width: 100%;overflow: hidden;}
 			.calendarbox ul {  width: 100%;}
 			.calendarbox ul li{width:  14.285%; float: left; font-size: 0.6rem; text-align: center;}
-
 		</style>
 	</head>
 
 	<body>
 		<div class="wrap">
-		<ul id="year" class="selectul">
-			<li data-year = "2008"  >2008</li>
-			<li data-year = "2009"  >2009</li>
-			<li data-year = "2010" >2010</li>
-			<li data-year = "2011" >2011</li>
-			<li data-year = "2012" >2012</li>
-			<li data-year = "2013" >2013</li>
-			<li data-year = "2014" >2014</li>
-			<li data-year = "2015" >2015</li>
-			<li data-year = "2016" >2016</li>
-			<li data-year = "2017" >2017</li>
-		</ul>
-		<div  class="blank1">
+			<ul id="year" class="selectul">
+				<li data-year="2008">2008</li>
+				<li data-year="2009">2009</li>
+				<li data-year="2010">2010</li>
+				<li data-year="2011">2011</li>
+				<li data-year="2012">2012</li>
+				<li data-year="2013">2013</li>
+				<li data-year="2014">2014</li>
+				<li data-year="2015">2015</li>
+				<li data-year="2016" class="current">2016</li>
+				<li data-year="2017">2017</li>
+			</ul>
+			<div class="blank1">
+
+			</div>
+			<ul id="month" class="selectul">
+				<li data-month="01">01</li>
+				<li data-month="02" class="current">02</li>
+				<li data-month="03">03</li>
+				<li data-month="04">04</li>
+				<li data-month="05">05</li>
+				<li data-month="06">06</li>
+				<li data-month="07">07</li>
+				<li data-month="08">08</li>
+				<li data-month="09">09</li>
+				<li data-month="10">10</li>
+				<li data-month="11">11</li>
+				<li data-month="12">12</li>
+			</ul>
+			<div class="blank1">
+			</div>
+			<div class="calendarbox clearfix">
+				<ul class="week">
+					<li>星期日</li>
+					<li>星期一</li>
+					<li>星期二</li>
+					<li>星期三</li>
+					<li>星期四</li>
+					<li>星期五</li>
+					<li>星期六</li>
+				</ul>
+				<ul id="daysul"></ul>
+			</div>
+			<div class="blank2"></div>
+			<div class="jilumes">
+			  <ul>
+			  	<li>时间：<span>2016年02月11日 17点57分</span></li>
+			  	<li>时长：<span>20分钟</span></li>
+			  	<li>温度：<span>37℃</span></li>
+			  </ul>
+			</div>
 			
 		</div>
-		<ul id="month" class="selectul">
-			<li data-month = "1">01</li>
-			<li data-month = "2">02</li>
-			<li data-month = "3">03</li>
-			<li data-month = "4">04</li>
-			<li data-month = "1">05</li>
-			<li data-month = "1">06</li>
-			<li data-month = "1">07</li>
-			<li data-month = "1">08</li>
-			<li data-month = "1">09</li>
-			<li data-month = "1">10</li>
-			<li data-month = "1">11</li>
-			<li data-month = "1">12</li>
-		</ul>
-		<div  class="blank1">
-		</div>
-		<div class="calendarbox">
-			<ul class="week">
-				<li>星期日</li>
-				<li>星期一</li>
-				<li>星期二</li>
-				<li>星期三</li>
-				<li>星期四</li>
-				<li>星期五</li>
-				<li>星期六</li>
-			</ul>
-			<ul id="daysul"></ul>
-		</div>
-	</div>
-		
+
 	</body>
-	<script type="text/javascript" src="js/zepto.min.js" ></script>
+	<script type="text/javascript" src="js/zepto.min.js"></script>
 	<script>
-	  function calendar(){
-	  	this.yearli=$('#year li');
-	  	this.monthli=$('#year li');
-	  	this.daysul=$('#daysul')
-	  }
-	  var C_ptype=  calendar.prototype
-	  C_ptype.tapSelect=function(){
-	  	var self=this;
-	  	//选择年份的时候的事件
-	    self.yearli.on('tap',function(){
-	    	$(this).addClass('current').siblings('li').removeClass('current')
-	    	var _year=$(this).attr('data-year')
-	    })
-	    //选择月份的时候的时间
-	    self.monthli.on('tap',function(){
-	    	
-	    })
-	  }
-	  C_ptype.getFirstDayWeek=function(){
-	  	
-	  }
-	  
-	  
-	  
-		
+		function calendar() {
+			this.year = $('#year');
+			this.month = $('#month');
+			this.yearli = this.year.children('li');
+			this.monthli = this.month.children('li');
+			this.daysul = $('#daysul');
+		}
+		var C_ptype = calendar.prototype
+		C_ptype.tapSelect = function() {
+				var self = this;
+				//选择年份的时候的事件
+				self.yearli.on('tap', function() {
+						$(this).addClass('current').siblings('li').removeClass('current')
+						var _year = $(this).attr('data-year')
+						var _month = self.month.children('.current').attr('data-month')
+						self.getDayInfo(_year, _month)
+					})
+					//选择月份的时候的时间
+				self.monthli.on('tap', function() {
+				})
+			}
+			//根据 time 时间格式： 拿到需要的时间信息。1首日的星期几。2当月的天数。3前一个月的天数。
+		C_ptype.getDayInfo = function(year, month) {
+			var _firstweek = new Date(year + '-' + month + '-' + '01').getDay(); //星期几 0代表星期日
+			var _monthdays = new Date(year, month, 0).getDate() //得到当前月份的天数
+			this.addMonthDays(_firstweek, _monthdays)
+		}
+		C_ptype.addMonthDays = function(startweek, num) {
+			var _html = ""
+				//为上个月份留空
+			for (i = 0; i < startweek; i++) {
+				_html += '<li>&nbsp;</li>'
+			}
+			for (i = 1; i <= num; i++) {
+				_html += '<li><span>' + i + '</span></li>'
+			}
+			this.daysul.html(_html)
+		}
+		var arrMes = [{
+			Time: '2016年02月01日 17点57分',
+			Tlength: '20分钟',
+			Waterheat: '37℃'
+		},{
+			Time: '2016年02月08日 17点57分',
+			Tlength: '20分钟',
+			Waterheat: '37℃'
+		},{
+			Time: '2016年02月11日 17点57分',
+			Tlength: '20分钟',
+			Waterheat: '37℃'
+		},{
+			Time: '2016年02月14日 17点57分',
+			Tlength: '20分钟',
+			Waterheat: '37℃'
+		},{
+			Time: '2016年02月19日 17点57分',
+			Tlength: '20分钟',
+			Waterheat: '37℃'
+		}]
+		var calendar = new calendar()
+		calendar.tapSelect()
 	</script>
-	
+
 </html>
