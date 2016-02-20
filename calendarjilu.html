@@ -58,9 +58,9 @@
 			<div class="blank1"></div>
 			<div class="jilumes">
 				<ul>
-					<li>时间：<span>2016年02月11日 17点57分</span></li>
-					<li>时长：<span>20分钟</span></li>
-					<li>温度：<span>37℃</span></li>
+					<li>时间：<span id="showtime">2016年02月11日 17点57分</span></li>
+					<li>时长：<span id="showtimelength">20分钟</span></li>
+					<li>温度：<span id="showwatherheat">37℃</span></li>
 				</ul>
 			</div>
 			<div class="blank2"></div>
@@ -77,15 +77,20 @@
 				this.daysul = $('#daysul');
 				this.yearbtn = $('#yearbtn');
 				this.monthbtn = $("#monthbtn");
+				this.showtime = $('#showtime');
+				this.showtimelingth = $('#showtimelength');
+				this.showwaterheat = $('#showwatherheat');
 			}
 			var C_ptype = calendar.prototype;
 			C_ptype.init = function(arrData) {
-				var self = this
-				self.initTap()
-				self.tapSelect()
-				self.iniNowCalendar()
-				self.arrData = arrData
-			}
+					var self = this
+					self.arrData = arrData
+					self.initTap()
+					self.tapSelect()
+					self.iniNowCalendar()
+					self.tapDaysFn()
+				}
+				//tap 年份和月份触发事件
 			C_ptype.initTap = function() {
 					var self = this
 					self.yearbtn.on('tap', function() {
@@ -107,6 +112,7 @@
 					var _nowtime = new Date();
 					var _year = _nowtime.getFullYear();
 					var _month = _nowtime.getMonth();
+					var _nowday = _nowtime.getDate();
 					for (i = 0; i < self.yearli.length; i++) {
 						if (self.yearli.eq(i).attr('data-year') == _year) {
 							self.yearli.eq(i).addClass('current')
@@ -114,12 +120,15 @@
 						}
 					}
 					for (i = 0; i < self.monthli.length; i++) {
-						if (self.monthli.eq(i).index() == _month) {
+						if (i == _month) {
 							self.monthli.eq(i).addClass('current')
 							self.monthbtn.children('em').text(self.monthli.eq(i).attr('data-month'));
 						}
 					}
-					self.getDayInfo(_year, _month + 1)
+					//把一位数变为两位数月份
+					_month += 1
+					_month = self.formatNumberDigit(_month, 2)
+					self.getDayInfo(_year, _month, _nowday)
 				}
 				//选择年份或者月份触发的事件
 			C_ptype.tapSelect = function() {
@@ -146,63 +155,100 @@
 					})
 				}
 				//根据 time 时间格式： 拿到需要的时间信息。1首日的星期几。2当月的天数。3前一个月的天数。
-			C_ptype.getDayInfo = function(year, month) {
-				console.log(month)
-				var _firstweek = new Date(year + '-' + month + '-' + '01').getDay(); //星期几 0代表星期日
-				var _monthdays = new Date(year, month, 0).getDate() //得到当前月份的天数
-				
-				this.addMonthDays(_firstweek, _monthdays,year,month)
-			}
-			C_ptype.addMonthDays = function(startweek, num,year,month) {
+			C_ptype.getDayInfo = function(year, month, nowday) {
+					var _firstweek = new Date(year + '-' + month + '-' + '01').getDay(); //星期几 0代表星期日
+					var _monthdays = new Date(year, month, 0).getDate() //得到当前月份的天数
+					this.addMonthDays(_firstweek, _monthdays, year, month, nowday)
+				}
+				//插入月份的方法
+			C_ptype.addMonthDays = function(startweek, num, year, month, nowday) {
+				var self = this;
 				var _html = ""
 					//为上个月份留空
 				for (i = 0; i < startweek; i++) {
 					_html += '<li>&nbsp;</li>'
 				}
 				for (i = 1; i <= num; i++) {
-					var _day=i
-					if(i<10){
-					_day='0'+i
+					var _day = self.formatNumberDigit(i, 2)
+					var _time = year + '-' + month + '-' + _day
+					for (j = 0; j < self.arrData.length; j++) {
+						if (self.arrData[j].keytime == _time) {
+							_html += '<li class="hasmes" data-keytime=' + _time + '><span>' + i + '</span></li>';
+							break
+						}
+						if (j == self.arrData.length - 1) {
+							_html += '<li><span>' + i + '</span></li>';
+						}
 					}
-					var _time=year+'-'+month+'-'+_day
-					console.log(_time)
-//					for (j = 0; j < self.arrData.length; j++) {
-//						if (self.arrData[j].keytime==){
-//							
-//						}
-//					}
-					_html += '<li><span>' + i + '</span></li>'
 				}
 				this.daysul.html(_html)
+				this.showDaysMes('')
 			}
-			var arrMes = [{
-				keytime:'2016-02-01',
-				Time: '2016年02月01日 17点57分',
-				Tlength: '20分钟',
-				Waterheat: '37℃'
-			}, {
-				keytime:'2016-02-08',
-				Time: '2016年02月08日 17点57分',
-				Tlength: '20分钟',
-				Waterheat: '37℃'
-			}, {
-				keytime:'2016-02-11',
-				Time: '2016年02月11日 17点57分',
-				Tlength: '20分钟',
-				Waterheat: '37℃'
-			}, {
-				keytime:'2016-02-14',
-				Time: '2016年02月14日 17点57分',
-				Tlength: '20分钟',
-				Waterheat: '37℃'
-			}, {
-				keytime:'2016-02-19',
-				Time: '2016年02月19日 17点57分',
-				Tlength: '20分钟',
-				Waterheat: '37℃'
-			}]
+			C_ptype.tapDaysFn = function() {
+				var self=this
+				$(document).on('tap', '#daysul li', function() {
+					$(this).addClass('current').siblings('li').removeClass('current')
+					var _keytime = $(this).attr('data-keytime')
+					self.showDaysMes(_keytime)
+				})
+			}
+			C_ptype.showDaysMes=function(keytime){
+				var self=this
+					for (i = 0; i < self.arrData.length; i++) {
+						if (self.arrData[i].keytime == keytime) {
+							self.showtime.text(self.arrData[i].Time)
+							self.showtimelingth.text(self.arrData[i].Tlength)
+							self.showwaterheat.text(self.arrData[i].Waterheat)
+							break;
+						}
+						if (i == self.arrData.length - 1) {
+							self.showtime.text("")
+							self.showtimelingth.text("")
+							self.showwaterheat.text("")
+						}
+					}
+			}
+			
+			//格式化方法 如：1 ->01
+			C_ptype.formatNumberDigit = function(number, digit) {
+				var _number = number.toString()
+				if (_number.length < digit) {
+					for (var i = 1; i < digit; i++) {
+						_number = '0' + _number
+					}
+				}
+				return _number
+			}
+			var arrData = [{
+					keytime: '2016-02-01',
+					Time: '2016年02月01日 17点57分',
+					Tlength: '11分钟',
+					Waterheat: '41℃'
+				}, {
+					keytime: '2016-02-08',
+					Time: '2016年02月08日 17点57分',
+					Tlength: '10分钟',
+					Waterheat: '37℃'
+				}, {
+					keytime: '2016-02-11',
+					Time: '2016年02月11日 17点57分',
+					Tlength: '18分钟',
+					Waterheat: '39℃'
+				}, {
+					keytime: '2016-02-14',
+					Time: '2016年02月14日 17点57分',
+					Tlength: '29分钟',
+					Waterheat: '43℃'
+				}, {
+					keytime: '2016-07-19',
+					Time: '2016年02月19日 17点57分',
+					Tlength: '19分钟',
+					Waterheat: '45℃'
+				}]
+				//创建日历
 			var calendar = new calendar()
-			calendar.init()
+			calendar.init(arrData)
+	
 		</script>
 	</body>
 
