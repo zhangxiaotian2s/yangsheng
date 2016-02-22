@@ -279,6 +279,8 @@ visibility: hidden;
 .shareone_right .time_xinxi{  height: 3rem; line-height: 3rem; font-size: 1.1rem; color: #cebcb3;}
 .time_xinxi span{ float: right; margin-right: 0.5rem; font-size: 1.5rem;}
 
+
+
 .sharepllisttop{ background: url(../images/toppllistbk.jpg) no-repeat center top; background-size:100% 100% ;  height: 0.6rem;}
 .sharepllist{ width: 94%; background: #f2ece9; padding: 0.5rem 3%; color: #564237; line-height: 1.5rem; font-size: 1.2rem;}
 .sharepllist span{ color: #906953;}
@@ -295,6 +297,8 @@ visibility: hidden;
 
 .waterrecord{ position: relative;border-bottom: none;}
 .waterlist{ height: 4rem;width: 100%; position: relative;}
+.right_time{ opacity: 0; z-index: 10;}
+
 .waterlist .line{ width: 86%; margin: auto;  height: 7px; border-bottom: #cfbdb4 solid 1px; }
 .waterlist ul{ position: absolute; top: 0rem; width: 100%; margin: auto;}
 .waterlist ul li{ float: left; width: 11.1111111%; text-align: center;color: #906953;font-size: 0.9rem;}
@@ -304,6 +308,8 @@ visibility: hidden;
 .waterlist ul li.current span{ background: #d85810; border-color: #d85810;}
 
 .watertime input{  width: 50%; text-align: right; margin-left: 50%; border: none;  height: 4rem; line-height: 4rem; font-size: 1.3rem; color: #906953; }
+
+
 
 .calendarhead{ background: #FFFFFF; height: 4rem;  width: 90%; position: relative; padding: 0rem 5%;}
 .yearmonthbox{ width: 6rem; height: 2rem; text-align: center ;float: left; color: #564237; padding-top: 1rem;}
@@ -315,6 +321,8 @@ visibility: hidden;
 .selectul li.current{ color: #d85810;}
 #year { left: 1.3rem;}
 #month{ left: 8.1rem;}
+
+
 
 .calendarbox{ width: 100%;overflow: hidden; background: #FFFFFF; padding-bottom: 1rem;}
 .calendarbox ul {  width: 100%;}

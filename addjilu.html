@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="UTF-8">
@@ -15,7 +16,8 @@
 		<div class="wrap">
 			<div class="jilubox clearfix">
 				<div class="jilutime">时间：
-					<time class="right_element" id="nowtime">2016年1月23日19点30分</time>
+					<input class="right_element right_time" id="timeinput" type="datetime-local" />
+					<time class="right_element" id="showtime">2016年1月23日19点30分</time>
 				</div>
 				<div class="waterrecord clearfix">水温:
 					<p class="right_element">
@@ -25,8 +27,8 @@
 				<div class="waterlist">
 					<div class="line"></div>
 					<ul id="heatul">
-						<li  class="current" data-heat="37"><span></span>37</li>
-						<li data-heat="38"><span ></span>38</li>
+						<li class="current" data-heat="37"><span></span>37</li>
+						<li data-heat="38"><span></span>38</li>
 						<li data-heat="39"><span></span>39</li>
 						<li data-heat="40"><span></span>40</li>
 						<li data-heat="41"><span></span>41</li>
@@ -38,27 +40,35 @@
 				</div>
 				<div class="watertime clearfix">时间:
 					<div class="right_element">
-					    <div  class="col-xs-10"><input type="number" value="20"  id="" ></div>
-					     <div  class="col-xs-2">分钟</div>
+						<div class="col-xs-10">
+							<input type="number" value="20" id="">
+						</div>
+						<div class="col-xs-2">分钟</div>
 					</div>
 				</div>
 			</div>
 			<div class="blank2"></div>
-			<button class="submitbtn">添  加</button>
+			<button class="submitbtn">添 加</button>
 		</div>
-		
-		<script type="text/javascript" src="js/zepto.min.js" ></script>
-		<script type="text/javascript" src="js/dateformat.js" ></script>
+
+		<script type="text/javascript" src="js/zepto.min.js"></script>
+		<script type="text/javascript" src="js/dateformat.js"></script>
 		<script type="text/javascript">
 			//获取当前时间
-			var  newtime=new Date().Format("yyyy年MM月dd日 hh点mm分"); 
-		   $('#nowtime').text(newtime)
-		   var waterheat=$('#waterheat')
-		   $('#heatul li').on('tap',function(){
-		   	$(this).addClass('current').siblings('li').removeClass('current')
-		   	waterheat.text($(this).attr('data-heat'))
-		   	
-		   })
+			var timeinput = $('#timeinput'),
+				showtime = $('#showtime')
+			var newtime = new Date().Format("yyyy年MM月dd日 hh点mm分");
+			showtime.text(newtime);
+			var _nowtime = new Date().Format("yyyy-MM-ddThh:mm")
+			timeinput.val(_nowtime);
+			timeinput.on('change', function() {
+				showtime.text(new Date(timeinput.val()).Format("yyyy年MM月dd日 hh点mm分"))
+			})
+			var waterheat = $('#waterheat')
+			$('#heatul li').on('tap', function() {
+				$(this).addClass('current').siblings('li').removeClass('current')
+				waterheat.text($(this).attr('data-heat'))
+			})
 		</script>
 	</body>
 
